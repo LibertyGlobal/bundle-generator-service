@@ -1,0 +1,35 @@
+{
+    "concurency": 2,
+    "worker": {
+        "in_decoder": "json",
+        "out_encoder": "msgpack",
+        "status_decoder": "msgpack",
+        "status_encoder": "json",
+        "in_queue": "bundlegen-service-requests",
+        "out_queue": "bundlegen-requests",
+        "status_queue": "bundlegen-service-status"
+    },
+    "storage": {
+        "type": "s3"
+    },
+    "envs": [
+        "BUNDLE_STORE_DIR",
+        "NGINX_STORE_DIR"
+    ],
+    "headers": [
+        "x-request-id"
+    ],
+    "templates_archive_name": "{platformName}_{firmwareVersion}_dac_configs.tgz",
+    "message": {
+        "uuid": "as_is:id",
+        "platform": "as_is:platformName",
+        "image_url": "as_is:ociImageUrl",
+        "app_metadata": "literal:",
+        "lib_match_mode": "literal:normal",
+        "app_id": "as_is:appId",
+        "output_filename": "format_string:{appId}-{appVersion}-{platformName}-{firmwareVersion}",
+        "searchpath": "format_string:{bundle_store_dir}/{id}",
+        "outputdir": "or:encrypt|{nginx_store_dir}/{appId}/{appVersion}/{platformName}/{firmwareVersion}|{bundle_store_dir}/{appId}/{appVersion}/{platformName}/{firmwareVersion}",
+        "createmountpoints": "bool:true"
+    }
+}

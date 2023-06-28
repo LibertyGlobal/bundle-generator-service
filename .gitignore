@@ -1,0 +1,22 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Helm
+**/Chart.lock
+
+# Build
+target/*
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+
+# tox
+.tox/
+.coverage
+cover/
+.mypy_cache/
+.mutmut-cache

@@ -1,0 +1,3 @@
+[submodule "BundleGen"]
+	path = BundleGen
+	url = https://github.com/rdkcentral/BundleGen.git

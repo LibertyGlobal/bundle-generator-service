@@ -1,0 +1,14 @@
+configMap:
+  APP: bundle-generator-bundlegen
+
+image:
+  repository: daccloud/bundle-generator-bundlegen
+
+service:
+  type: "ClusterIP"
+  port: 80
+  containerPort: 80
+
+pv:
+  path: /bundle-generator-bundlegen/data
+  server: <ip address of nfs>

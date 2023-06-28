@@ -1,0 +1,80 @@
+version: '3.2'
+
+services:
+  bundle-generator-service:
+    build:
+      context: ./service
+      dockerfile: ./Dockerfile
+    container_name: bundle-generator-service
+    environment:
+      - BUNDLE_STORE_DIR=${BUNDLE_STORE_DIR}
+      - NGINX_STORE_DIR=${NGINX_STORE_DIR}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET=${S3_BUCKET}
+      - S3_REGION=${S3_REGION}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PORT=${RABBITMQ_PORT}
+      - RABBITMQ_CONNECTION_ATTEMPTS=${RABBITMQ_CONNECTION_ATTEMPTS}
+      - RABBITMQ_RETRY_DELAY=${RABBITMQ_RETRY_DELAY}
+      - BUNDLE_CONFIG_FILE=${BUNDLE_CONFIG_FILE}
+    volumes:
+      - generated_bundles:${BUNDLE_STORE_DIR}
+      - nginx_bundles:${NGINX_STORE_DIR}
+    ports:
+      - 10001:8081
+    healthcheck:
+      test: curl localhost:8081/healthz
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    depends_on:
+      - bundle-generator-rabbit
+    links:
+      - bundle-generator-rabbit:bundle-generator-rabbit
+    restart: always
+
+  bundle-generator:
+    build:
+      context: ./BundleGen
+      dockerfile: ./docker/rabbitmq/Dockerfile
+    environment:
+      - BUNDLE_STORE_DIR=${BUNDLE_STORE_DIR}
+      - NGINX_STORE_DIR=${NGINX_STORE_DIR}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PORT=${RABBITMQ_PORT}
+      - TMP_DIR=${TMP_DIR}
+      - BUNDLEGEN_TMP_DIR=${BUNDLEGEN_TMP_DIR}
+    volumes:
+      - generated_bundles:${BUNDLE_STORE_DIR}
+      - nginx_bundles:${NGINX_STORE_DIR}
+    healthcheck:
+      test: curl -u guest:guest bundle-generator-rabbit:15672/api/whoami
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    depends_on:
+      - bundle-generator-rabbit
+    links:
+      - bundle-generator-rabbit:bundle-generator-rabbit
+    restart: always
+
+  bundle-generator-rabbit:
+    image: rabbitmq:3-management
+    hostname: bundle-generator-rabbit
+    container_name: bundle-generator-rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+volumes:
+  nginx_bundles:
+  generated_bundles:
+  rabbitmq_data:
