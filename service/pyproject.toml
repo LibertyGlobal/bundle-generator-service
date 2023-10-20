@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bundle-generator-service"
-version = '0.0.18'
+version = '0.0.19'
 description = "Wrapper around https://github.com/rdkcentral/BundleGen"
 readme = "README.md"
 authors = ["Yauheni Yemelyanenka aka (EugeneY) <yauheni_yemelyanenka@epam.com>"]

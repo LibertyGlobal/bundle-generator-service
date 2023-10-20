@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   bundle-generator-service:
   - apiVersion: v2
+    appVersion: 0.0.19
+    created: "2023-10-20T10:13:35.767140151Z"
+    description: Bundle Generator service
+    digest: ce6bb318eeb856d7b62490fa63d588e4e49794fdce6254552b8a411f6b02affd
+    kubeVersion: '>=1.12.0-0'
+    name: bundle-generator-service
+    type: application
+    urls:
+    - https://libertyglobal.github.io/bundle-generator-service/charts/bundle-generator-service-0.0.19.tgz
+    version: 0.0.19
+  - apiVersion: v2
     appVersion: 0.0.18
-    created: "2023-08-29T10:47:58.567398899Z"
+    created: "2023-10-20T10:13:35.766326537Z"
     description: Bundle Generator service
     digest: 5bfb781a2ddaca95213fded7d6bed6f6a4625d0abb59fed956c121be45e19970
     kubeVersion: '>=1.12.0-0'
@@ -14,7 +25,7 @@ entries:
     version: 0.0.18
   - apiVersion: v2
     appVersion: 0.0.17
-    created: "2023-08-29T10:47:58.566467805Z"
+    created: "2023-10-20T10:13:35.765430521Z"
     description: Bundle Generator service
     digest: 30c799c07db53f1f031e789a2a91bf9576cc6576cfbae5883bac039270f814da
     kubeVersion: '>=1.12.0-0'
@@ -23,4 +34,4 @@ entries:
     urls:
     - https://libertyglobal.github.io/bundle-generator-service/charts/bundle-generator-service-0.0.17.tgz
     version: 0.0.17
-generated: "2023-08-29T10:47:58.56356051Z"
+generated: "2023-10-20T10:13:35.763656789Z"
