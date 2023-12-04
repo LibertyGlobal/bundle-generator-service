@@ -19,12 +19,19 @@
 
 """Flask app for monitoring purpose."""
 from flask import Flask
+from info import Info
 
 
 app = Flask(__name__)
+app_info = Info()
 
 
 @app.route("/healthz")
 def healthz() -> str:
     """Stub for test purpose."""
     return "OK"
+
+
+@app.route("/info")
+def info() -> str:
+    return app_info.get()
