@@ -18,6 +18,9 @@
 #
 
 """Flask app for monitoring purpose."""
+
+from typing import Dict
+
 from flask import Flask
 from info import Info
 
@@ -33,5 +36,8 @@ def healthz() -> str:
 
 
 @app.route("/info")
-def info() -> str:
-    return app_info.get()
+def info() -> Dict[str, str]:
+    """Info endpoint."""
+    appinfo: Dict[str, str] = {}
+    appinfo = app_info.get()
+    return appinfo
