@@ -22,7 +22,8 @@
 from typing import Dict
 
 from flask import Flask
-from info import Info
+
+from service.info import Info
 
 
 app = Flask(__name__)
